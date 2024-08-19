@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 const links = [
   ["Home", "/"],
   ["About", "/about"],
@@ -7,12 +9,19 @@ const links = [
 ];
 
 export function Nav() {
+  const current = "/";
+
   return (
-    <nav>
-      <ul>
+    <nav className="nav-container">
+      <ul className="nav-items">
         {links.map(([text, href]) => (
           <li key={text}>
-            <a href={href}>{text}</a>
+            <a
+              className={clsx("nav-item", href === current && "selected")}
+              href={href}
+            >
+              {text}
+            </a>
           </li>
         ))}
       </ul>

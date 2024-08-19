@@ -1,3 +1,7 @@
+/* ==========
+   Normalize
+   ========== */
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -5,4 +9,54 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+/* ==========
+   Global
+   ========== */
+
+:root {
+  --color-brand-primary: #495e57;
+  --color-brand-primary-bg: #edefee;
+  --color-brand-secondary: #f4ce14;
+  --color-brand-ternary: #ee9972;
+  --color-brand-ternary-bg: #fbdabb;
+  --color-text-primary: #333333;
+  --color-text-secondary: #edefee;
+
+  --font-size-base: 1rem;
+}
+
+.text-xs {
+  font-size: calc(var(--font-size-base) * 0.75);
+}
+
+.text-sm {
+  font-size: var(--font-size-base);
+}
+
+.text-lg {
+  font-size: calc(var(--font-size-base) * 1.25);
+}
+
+.text-xl {
+  font-size: calc(var(--font-size-base) * 1.5);
+}
+
+.text-2xl {
+  font-size: calc(var(--font-size-base) * 2);
 }

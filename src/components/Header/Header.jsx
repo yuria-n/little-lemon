@@ -1,4 +1,7 @@
+import { Link } from "wouter";
+
 import { Nav } from "./Nav";
+import { routePath } from "../../constants";
 
 import logo from "../../assets/logo.svg";
 
@@ -8,10 +11,9 @@ export function Header() {
   return (
     <header className="header-container">
       <div className="header-content">
-        <a href="/public">
+        <Link to={routePath.home}>
           <img alt="Go to home" height={48} src={logo} />
-        </a>
-
+        </Link>
         <Nav />
       </div>
     </header>

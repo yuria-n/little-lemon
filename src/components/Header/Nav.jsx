@@ -1,15 +1,10 @@
 import clsx from "clsx";
+import { usePathname } from "wouter/use-browser-location";
 
-const links = [
-  ["Home", "/"],
-  ["About", "/about"],
-  ["Menu", "/menu"],
-  ["Reservations", "/reservations"],
-  ["Order Online", "/order"],
-];
+import { links } from "../../constants";
 
 export function Nav() {
-  const current = "/";
+  const current = usePathname();
 
   return (
     <nav className="nav-container">

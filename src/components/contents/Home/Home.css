@@ -18,15 +18,16 @@
 
 .home-hero-content .text-title {
   color: var(--color-text-primary-dark);
-  font-weight: bold;
-  font-size: calc(var(--font-size-base) * 4);
-  line-height: 0.9;
+  font-size: calc(var(--font-size-base) * 5);
+  font-weight: 600;
+  line-height: 0.75;
   margin: 1rem 0 0.5rem;
 }
 
 .home-hero-content .text-title-sub {
   color: var(--color-text-secondary-dark);
   font-size: calc(var(--font-size-base) * 2);
+  font-weight: 500;
   margin: 0 0 1.25rem;
 }
 

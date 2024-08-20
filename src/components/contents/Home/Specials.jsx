@@ -6,8 +6,7 @@ import imgSpecial3 from "../../../assets/img_special_3.png";
 
 export function Specials() {
   return (
-    <Section className="home-special-container">
-      <h2>This week's specials</h2>
+    <Section className="home-special-container" title="This week's specials">
       <div className="home-special-cards">
         <SpecialCard
           src={imgSpecial1}

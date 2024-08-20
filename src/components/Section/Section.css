@@ -1,11 +1,11 @@
 .section-content {
   max-width: var(--screen-width-xl);
   margin: 0 auto;
-  padding: 2.5rem 1rem;
+  padding: 2.5rem 1rem 3rem;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
 }

@@ -46,9 +46,13 @@ li {
   --color-brand-ternary: #ee9972;
   --color-brand-ternary-bg: #fbdabb;
   --color-text-primary: #2a3333;
+  --color-text-primary-dark: var(--color-brand-secondary);
   --color-text-secondary: #4a5050;
+  --color-text-secondary-dark: var(--color-brand-primary-bg);
 
   --font-size-base: 1rem;
+
+  --screen-width-xl: 1280px;
 }
 
 .text-xs {

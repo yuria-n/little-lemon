@@ -1,29 +1,17 @@
 import { Section } from "../../Section";
 
-import imgHero from "../../../assets/img_hero.jpg";
 import imgSpecial1 from "../../../assets/img_special_1.png";
 import imgSpecial2 from "../../../assets/img_special_2.png";
 import imgSpecial3 from "../../../assets/img_special_3.png";
 import imgAbout from "../../../assets/img_about.jpg";
+import { Hero } from "./Hero";
+
+import "./Home.css";
 
 export function Home() {
   return (
     <>
-      <Section className="home-hero-container">
-        <h1>Little Lemon</h1>
-        <p>Chicago</p>
-        <p>
-          We are a family owned Mediterranean restaurant, focused on traditional
-          recipes served with a modern twist.
-        </p>
-        <img
-          width={600}
-          src={imgHero}
-          alt="About Little Lemon"
-          className="about-image"
-        />
-      </Section>
-
+      <Hero />
       <Section className="home-special-container">
         <h2>This week's specials</h2>
         <div className="specials-grid">

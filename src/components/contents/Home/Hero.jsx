@@ -5,11 +5,8 @@ export function Hero() {
     <Section className="home-hero-container">
       <div className="home-hero-content">
         <hgroup>
-          <h1 className="text-title">
-            Little Lemon
-            <br />
-            <span className="text-title-sub">Chicago</span>
-          </h1>
+          <h1 className="text-title">Little Lemon</h1>
+          <h2 className="text-title-sub">Chicago</h2>
           <p className="text-desc">
             We are a family owned Mediterranean restaurant, focused on
             traditional recipes served with a modern twist.

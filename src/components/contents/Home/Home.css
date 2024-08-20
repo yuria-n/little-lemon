@@ -1,3 +1,7 @@
+/* ==========
+   Hero
+   ========== */
+
 .home-hero-container {
   container: hero / inline-size;
   background: var(--color-text-primary);
@@ -16,13 +20,14 @@
   color: var(--color-text-primary-dark);
   font-weight: bold;
   font-size: calc(var(--font-size-base) * 4);
-  line-height: 0.75;
-  margin: 0 0 2rem;
+  line-height: 0.9;
+  margin: 1rem 0 0.5rem;
 }
 
 .home-hero-content .text-title-sub {
   color: var(--color-text-secondary-dark);
   font-size: calc(var(--font-size-base) * 2);
+  margin: 0 0 1.25rem;
 }
 
 .home-hero-content .text-desc {
@@ -41,14 +46,7 @@
   background-size: cover;
 }
 
-.home-hero-content .image-content {
-  width: 100%;
-  position: absolute;
-  object-fit: fill;
-  object-position: 50% 50%;
-}
-
-@container hero (max-width: 630px) {
+@container hero (max-width: 640px) {
   .home-hero-content {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
@@ -56,5 +54,68 @@
 
   .home-hero-content .image-container {
     min-height: 10rem;
+  }
+}
+
+/* ==========
+   Specials
+   ========== */
+
+.home-special-container {
+  container: special / inline-size;
+  background: var(--color-brand-ternary-bg);
+}
+
+.home-special-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.home-special-card {
+  padding: 1rem;
+  border-radius: 2rem 0;
+  background: white;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  justify-items: start;
+  grid-auto-flow: row;
+}
+
+.home-special-card .image-content {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid var(--color-brand-primary-bg);
+}
+
+.home-special-card .text-title {
+  margin: 0.5rem 0 0.25rem;
+}
+
+.home-special-card .text-price {
+  color: var(--color-brand-ternary);
+  font-weight: bold;
+  margin: 0 0 0.5rem;
+}
+
+.button-order {
+  margin-top: 1rem;
+  align-self: end;
+}
+
+@container special (max-width: 768px) {
+  .home-special-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .home-special-card-figure {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1rem;
+  }
+
+  .button-order {
+    justify-self: stretch;
   }
 }

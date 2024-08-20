@@ -35,6 +35,10 @@ li {
   list-style: none;
 }
 
+figure {
+  margin: 0;
+}
+
 /* ==========
    Global
    ========== */
@@ -43,7 +47,7 @@ li {
   --color-brand-primary: #495e57;
   --color-brand-primary-bg: #edefee;
   --color-brand-secondary: #f4ce14;
-  --color-brand-ternary: #ee9972;
+  --color-brand-ternary: #f0705f;
   --color-brand-ternary-bg: #fbdabb;
   --color-text-primary: #2a3333;
   --color-text-primary-dark: var(--color-brand-secondary);
@@ -53,6 +57,9 @@ li {
   --font-size-base: 1rem;
 
   --screen-width-xl: 1280px;
+  --screen-width-lg: 1024px;
+  --screen-width-md: 768px;
+  --screen-width-sm: 640px;
 }
 
 .text-xs {
@@ -63,6 +70,7 @@ li {
 .text-sm {
   color: var(--color-text-secondary);
   font-size: var(--font-size-base);
+  line-height: 1.25;
 }
 
 .text-lg {

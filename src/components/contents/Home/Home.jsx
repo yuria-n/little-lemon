@@ -5,33 +5,14 @@ import { Specials } from "./Specials";
 import imgAbout from "../../../assets/img_about.jpg";
 
 import "./Home.css";
+import { Reviews } from "./Reviews";
 
 export function Home() {
   return (
     <>
       <Hero />
       <Specials />
-
-      <Section className="home-review-container">
-        <h2>Customer reviews</h2>
-        <div className="menu-grid">
-          <div className="menu-item">
-            <p>★★★★★ 5.0</p>
-            <img
-              width={60}
-              src="https://i.pravatar.cc/60"
-              alt="Reviewer avatar"
-            />
-            <h3>Reviewer name</h3>
-            <span>❝</span>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <span>❞</span>
-          </div>
-        </div>
-      </Section>
+      <Reviews />
 
       <Section className="home-about-container">
         <h2>About Little Lemon</h2>

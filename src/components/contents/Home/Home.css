@@ -120,3 +120,51 @@
     justify-self: stretch;
   }
 }
+
+/* ==========
+   Reviews
+   ========== */
+
+.home-review-container {
+  container: review / inline-size;
+}
+
+.home-review-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.home-review-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-brand-primary-bg);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.text-star {
+  color: var(--color-brand-secondary);
+  grid-column: 1 / -1;
+}
+
+.text-name {
+  color: var(--color-text-primary);
+}
+
+.home-review-card .image-content {
+  border-radius: 50%;
+}
+
+.home-review-card .text-desc {
+  grid-column: 1 / -1;
+}
+
+@container review (max-width: 768px) {
+  .home-review-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

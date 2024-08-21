@@ -1,16 +1,17 @@
 import { Route, Switch } from "wouter";
 
-import { Header, Footer, NotFound, Home } from "./components";
+import { Header, Footer, NotFound, Home, About, Menu } from "./components";
 import { links, routePath } from "./constants";
 
 import "./App.css";
+import { Section } from "./components/Section";
 
 const contents = {
   [routePath.home]: Home,
-  [routePath.about]: () => <div>About</div>,
-  [routePath.menu]: () => <div>Menu</div>,
-  [routePath.reservation]: () => <div>Reservations</div>,
-  [routePath.order]: () => <div>Online order</div>,
+  [routePath.about]: About,
+  [routePath.menu]: Menu,
+  [routePath.reservation]: () => <Section title="Reservations" />,
+  [routePath.order]: () => <Section title="Online order" />,
 };
 
 export function App() {

@@ -62,6 +62,7 @@ figure {
   --color-brand-secondary: #f4ce14;
   --color-brand-ternary: #f0705f;
   --color-brand-ternary-bg: #fbdabb;
+  --color-brand-quaternary-bg: #cfe7e3;
   --color-text-primary: #2a3333;
   --color-text-primary-dark: var(--color-brand-secondary);
   --color-text-secondary: #4a5050;

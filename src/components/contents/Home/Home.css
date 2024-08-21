@@ -10,7 +10,7 @@
 
 .home-hero-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   align-items: center;
   justify-items: center;
   gap: 2rem;
@@ -37,8 +37,6 @@
 }
 
 .home-hero-content .image-container {
-  position: relative;
-  overflow: hidden;
   width: 100%;
   height: auto;
   min-height: 20rem;
@@ -167,4 +165,23 @@
   .home-review-cards {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* ==========
+   About
+   ========== */
+
+.home-about-container {
+  background-color: var(--color-brand-quaternary-bg);
+}
+
+.home-about-container .image-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.home-about-container .image-content {
+  width: 100%;
+  border-radius: 1rem;
 }

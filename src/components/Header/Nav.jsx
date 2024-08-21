@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { usePathname } from "wouter/use-browser-location";
 
 import { links } from "../../constants";
+import { Button } from "../Button";
 
 export function Nav() {
   const current = usePathname();
@@ -9,17 +10,20 @@ export function Nav() {
   return (
     <nav className="nav-container">
       <ul className="nav-items">
-        {links.map(([text, href]) => (
-          <li key={text}>
-            <a
-              className={clsx("nav-item", href === current && "selected")}
-              href={href}
-            >
-              {text}
-            </a>
-          </li>
+        {links.map(([text, to]) => (
+          <NavItem key={text} selected={to === current} to={to} text={text} />
         ))}
       </ul>
     </nav>
+  );
+}
+
+function NavItem({ className, to, text, selected }) {
+  return (
+    <li>
+      <Button className={clsx("nav-item", { selected })} to={to}>
+        {text}
+      </Button>
+    </li>
   );
 }

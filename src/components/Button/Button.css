@@ -1,0 +1,31 @@
+.button-link {
+  color: var(--color-brand-primary);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 1.25rem;
+  text-decoration: none;
+  transition: 0.3s ease background-color;
+}
+
+.button-link:hover {
+  text-decoration: underline;
+  background: var(--color-brand-primary-bg);
+}
+
+.button-link.primary {
+  color: var(--color-text-primary);
+  background: var(--color-brand-secondary);
+}
+
+.button-link.primary:hover {
+  background: #ffe336;
+}
+
+.button-link.secondary {
+  color: var(--color-brand-white);
+  background: var(--color-brand-primary);
+}
+
+.button-link.secondary:hover {
+  background: #617f75;
+}

@@ -6,7 +6,7 @@ import imageAbout3 from "../../../assets/img_about_3.png";
 
 export function About() {
   return (
-    <Section className="home-about-container" title="Reservations Little Lemon">
+    <Section className="home-about-container" title="About Little Lemon">
       <p className="text-sm text-desc">
         Little Lemon is a charming neighborhood bistro that serves simple food
         and classic cocktails in a lively but casual environment. The restaurant

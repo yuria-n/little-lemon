@@ -16,24 +16,32 @@
   gap: 2rem;
 }
 
+.home-hero-content .text-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  justify-items: start;
+  gap: 0.5rem;
+}
+
 .home-hero-content .text-title {
   color: var(--color-text-primary-dark);
   font-size: calc(var(--font-size-base) * 5);
   font-weight: 600;
   line-height: 0.75;
-  margin: 1rem 0 0.5rem;
+  margin: 1rem 0 0;
 }
 
 .home-hero-content .text-title-sub {
   color: var(--color-text-secondary-dark);
   font-size: calc(var(--font-size-base) * 2);
   font-weight: 500;
-  margin: 0 0 1.25rem;
 }
 
 .home-hero-content .text-desc {
   color: var(--color-text-secondary-dark);
   line-height: 1.5;
+  margin: 0.5rem 0 1.25rem;
 }
 
 .home-hero-content .image-container {
@@ -101,6 +109,7 @@
 .button-order {
   margin-top: 1rem;
   align-self: end;
+  text-align: center;
 }
 
 @container special (max-width: 768px) {

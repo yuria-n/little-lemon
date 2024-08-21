@@ -1,4 +1,6 @@
 import { Section } from "../../Section";
+import { Button } from "../../Button";
+import { routePath } from "../../../constants";
 
 import imgSpecial1 from "../../../assets/img_special_1.png";
 import imgSpecial2 from "../../../assets/img_special_2.png";
@@ -45,9 +47,9 @@ function SpecialCard({ src, title, price, desc, onClick }) {
           <p className="text-sm">{desc}</p>
         </figcaption>
       </figure>
-      <button className="button-order" onClick={onClick}>
+      <Button variant="secondary" className="button-order" to={routePath.order}>
         Order now
-      </button>
+      </Button>
     </article>
   );
 }

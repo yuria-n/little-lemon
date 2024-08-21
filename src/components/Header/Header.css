@@ -26,23 +26,18 @@
 
 .nav-item {
   color: var(--color-brand-primary);
-  padding: 0.5rem 1rem;
-  border-radius: 1.25rem;
-  text-decoration: none;
-  transition: 0.3s ease background-color;
 }
 
 .nav-item:hover {
-  text-decoration: underline;
   background: var(--color-brand-primary-bg);
 }
 
 .nav-item.selected {
-  font-weight: bold;
+  font-weight: 700;
   background: var(--color-brand-primary-bg);
   pointer-events: none;
 }
 
-.nav-item.selected:hover {
+.button-link.selected:hover {
   text-decoration: none;
 }

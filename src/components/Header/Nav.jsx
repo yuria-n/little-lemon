@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { usePathname } from "wouter/use-browser-location";
 
 import { links } from "../../constants";
-import { Button } from "../Button";
+import { ButtonLink } from "../Button";
 
 export function Nav() {
   const current = usePathname();
@@ -21,9 +21,9 @@ export function Nav() {
 function NavItem({ className, to, text, selected }) {
   return (
     <li>
-      <Button className={clsx("nav-item", { selected })} to={to}>
+      <ButtonLink className={clsx("nav-item", { selected })} to={to}>
         {text}
-      </Button>
+      </ButtonLink>
     </li>
   );
 }

@@ -1,5 +1,5 @@
 import { Section } from "../../Section";
-import { Button } from "../../Button";
+import { ButtonLink } from "../../Button";
 import { routePath } from "../../../constants";
 
 export function Hero() {
@@ -13,13 +13,13 @@ export function Hero() {
             We are a family owned Mediterranean restaurant, focused on
             traditional recipes served with a modern twist.
           </p>
-          <Button
+          <ButtonLink
             className="button-hero"
             variant="primary"
             to={routePath.reservation}
           >
             Reserve a table
-          </Button>
+          </ButtonLink>
         </hgroup>
 
         <div className="image-container" />

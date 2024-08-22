@@ -2,9 +2,11 @@
   color: var(--color-brand-primary);
   font-weight: 500;
   padding: 0.5rem 1rem;
+  border: none;
   border-radius: 1.25rem;
   text-decoration: none;
   transition: 0.3s ease background-color;
+  cursor: pointer;
 }
 
 .button-link:hover {

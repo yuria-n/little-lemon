@@ -84,6 +84,7 @@ textarea {
   --color-text-primary-dark: var(--color-brand-secondary);
   --color-text-secondary: #4a5050;
   --color-text-secondary-dark: var(--color-brand-primary-bg);
+  --color-text-error: #e42525;
 
   --font-size-base: 1rem;
 

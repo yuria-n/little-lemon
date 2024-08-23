@@ -15,7 +15,7 @@
 }
 
 .form-label-required {
-  color: var(--color-brand-primary);
+  color: inherit;
   font-weight: 800;
   margin: 0 0 0 2px;
 }
@@ -41,6 +41,16 @@
   border-radius: 50%;
 }
 
+.form-time-filter-option.active,
+.form-time-option.active {
+  pointer-events: none;
+  text-decoration: none;
+}
+
+.active:hover {
+  background: var(--color-brand-primary);
+}
+
 .form-occasion-options {
   display: flex;
   flex-wrap: wrap;
@@ -51,4 +61,16 @@
   resize: vertical;
   min-height: 3lh;
   field-sizing: content;
+}
+
+.form-error-label {
+  color: var(--color-text-error);
+}
+
+.form-error-input {
+  border-color: var(--color-text-error);
+}
+
+.form-error-message {
+  color: var(--color-text-error);
 }

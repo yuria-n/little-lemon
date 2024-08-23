@@ -1,9 +1,16 @@
 import clsx from "clsx";
+import { useCallback, useMemo, useState } from "react";
 
 import { Section } from "../../Section";
 import { Button } from "../../Button";
 
 import "./Reservations.css";
+import { useInput } from "../../../hooks";
+
+const timeFilters = [
+  { id: "lunch", label: "Lunch" },
+  { id: "dinner", label: "Dinner" },
+];
 
 const lunchTimes = [
   "11:00",
@@ -47,41 +54,109 @@ const occasions = [
 ];
 
 export function Reservations() {
+  const today = useMemo(() => new Date().toISOString().split("T")[0], []);
+  const validateDate = useCallback(
+    (e) => {
+      if (e.target.value === "") {
+        return "Date is required.";
+      }
+      if (e.target.value <= today) {
+        return "Date cannot be in the past.";
+      }
+      return "";
+    },
+    [today],
+  );
+  const changeDate = useCallback((e) => {
+    return e.target.value;
+  }, []);
+  const date = useInput("", validateDate, changeDate);
+
+  const [timeFilter, setTimeFilter] = useState(timeFilters[0].id);
+  const [time, setTime] = useState("");
+  const [guest, setGuest] = useState(2);
+  const [occasion, setOccasion] = useState("");
+  const [note, setNote] = useState("");
+
+  const timeOptions =
+    timeFilter === timeFilters[0].id ? lunchTimes : dinnerTimes;
+
+  const onSubmit = useCallback(
+    () => console.log("＼(^o^)／ Submit! Go to the next page."),
+    [],
+  );
+
   return (
     <Section title="Reserve a table">
       <form className="reservation-form">
         <Fieldset legend="Date & Time">
-          <FormLabel htmlFor="res-date" required>
+          <FormLabel
+            htmlFor="reservation-date"
+            required
+            className={clsx({ "form-error-label": date.error.length > 0 })}
+          >
             Date
           </FormLabel>
-          <input type="date" id="res-date" />
-          <FormLabel htmlFor="res-time" required>
+          <input
+            className={clsx({ "form-error-input": date.error.length > 0 })}
+            id="reservation-date"
+            type="date"
+            required
+            autoFocus
+            min={today}
+            value={date.value}
+            onChange={date.setValue}
+            onBlur={date.setValue}
+          />
+          {date.error.length > 0 && (
+            <p className="text-bold form-error-message" aria-live="assertive">
+              {date.error}
+            </p>
+          )}
+
+          <FormLabel htmlFor="reservation-time" required>
             Time
           </FormLabel>
           <div className="time-filter-options">
-            <Button
-              className="meal-option active"
-              variant="secondary"
-              aria-pressed="true"
-            >
-              Lunch
-            </Button>
-            <Button
-              className="meal-option"
-              variant="normal"
-              aria-pressed="false"
-            >
-              Dinner
-            </Button>
-          </div>
-          <ul id="res-time" className="form-time-options">
-            {lunchTimes.map((lunchTime) => (
-              <li key={lunchTime.id}>
-                <Button className="form-time-option" variant="normal">
-                  {lunchTime}
+            {timeFilters.map(({ id, label }) => {
+              const active = timeFilter === id;
+              return (
+                <Button
+                  key={id}
+                  data-id={id}
+                  className={clsx("form-time-filter-option", { active })}
+                  variant={active ? "secondary" : "normal"}
+                  aria-pressed={active}
+                  onClick={(e) => {
+                    console.log("＼(^o^)／", e.target.dataset.id);
+                    setTimeFilter(e.target.dataset.id);
+                  }}
+                >
+                  {label}
                 </Button>
-              </li>
-            ))}
+              );
+            })}
+          </div>
+          <ul id="reservation-time" className="form-time-options">
+            {timeOptions.map((option) => {
+              const active = time === option;
+              return (
+                <li key={option}>
+                  <Button
+                    className={clsx("form-time-option", { active })}
+                    variant={active ? "secondary" : "normal"}
+                    aria-pressed={active}
+                    data-id={option}
+                    onClick={(e) => {
+                      console.log("＼(^o^)／", e.target.dataset.id);
+                      setTime(e.target.dataset.id);
+                    }}
+                  >
+                    {option}
+                  </Button>
+                </li>
+              );
+            })}
           </ul>
         </Fieldset>
 
@@ -89,17 +164,43 @@ export function Reservations() {
           <FormLabel htmlFor="guests" required>
             Guests
           </FormLabel>
-          <input type="number" placeholder="2" min="2" max="20" id="guests" />
+          <input
+            type="number"
+            placeholder="Enter the number of guests"
+            min="2"
+            max="20"
+            id="guests"
+            value={guest}
+            onChange={(e) => {
+              console.log("＼(^o^)／", e.target.value);
+              setGuest(Number(e.target.value));
+            }}
+          />
         </Fieldset>
 
-        <Fieldset legend="Occation">
+        <Fieldset legend="Occasion">
           <FormLabel htmlFor="occasion-option">Occasion</FormLabel>
           <ul id="occasion-option" className="form-occasion-options">
-            {occasions.map((occasion) => (
-              <li key={occasion.id}>
-                <Button>{occasion.label}</Button>
-              </li>
-            ))}
+            {occasions.map(({ id, label }) => {
+              const active = id === occasion;
+              return (
+                <li key={id}>
+                  <Button
+                    className={clsx("form-occasion-option", { active })}
+                    variant={active ? "secondary" : "normal"}
+                    aria-pressed={active}
+                    data-id={id}
+                    onClick={(e) => {
+                      const { id } = e.target.dataset;
+                      console.log("＼(^o^)／", id);
+                      setOccasion((prevId) => (prevId === id ? "" : id));
+                    }}
+                  >
+                    {label}
+                  </Button>
+                </li>
+              );
+            })}
           </ul>
 
           <FormLabel htmlFor="occasion-note">Notes</FormLabel>
@@ -108,10 +209,17 @@ export function Reservations() {
             id="occasion-note"
             rows="3"
             placeholder="Add a special request (optional)"
+            value={note}
+            onChange={(e) => {
+              console.log("＼(^o^)／", e.target.value);
+              setNote(e.target.value);
+            }}
           />
         </Fieldset>
 
-        <Button variant="primary">Make your reservation</Button>
+        <Button variant="primary" onClick={onSubmit}>
+          Make your reservation
+        </Button>
       </form>
     </Section>
   );
@@ -128,10 +236,7 @@ function Fieldset({ legend, className, children }) {
 
 function FormLabel({ className, required, children, ...props }) {
   return (
-    <label
-      className={clsx("form-label", "text-sm", "form-label", className)}
-      {...props}
-    >
+    <label className={clsx("text-bold", "form-label", className)} {...props}>
       {children}
       {required && <span className="form-label-required">*</span>}
     </label>

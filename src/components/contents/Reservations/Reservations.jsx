@@ -53,7 +53,7 @@ const occasions = [
   { id: "other", label: "Other" },
 ];
 
-function handleChangeTargetValue(e) {
+function handleTargetValue(e) {
   return e.target.value;
 }
 
@@ -78,12 +78,27 @@ function validateTime(e) {
   }
 }
 
+const guestMin = 2;
+const guestMax = 20;
+function validateGuest(e) {
+  const value = Number(e.target.value);
+  if (value < 0 || !Number.isSafeInteger(value)) {
+    return "Invalid number of guests. It must be a positive integer.";
+  }
+  if (value < guestMin) {
+    return "The minimum number of guests is 2.";
+  }
+  if (value > guestMax) {
+    return "The maximum number of guests is 20.";
+  }
+}
+
 export function Reservations() {
-  const date = useInput("", handleChangeTargetValue, validateDate);
+  const date = useInput("", handleTargetValue, validateDate);
   const timeFilter = useInput(timeFilters[0].id, handleTargetDataset);
   const time = useInput("", handleTargetDataset, validateTime);
+  const guest = useInput(guestMin, handleTargetValue, validateGuest);
 
-  const [guest, setGuest] = useState(2);
   const [occasion, setOccasion] = useState("");
   const [note, setNote] = useState("");
 
@@ -168,15 +183,13 @@ export function Reservations() {
           <input
             type="number"
             placeholder="Enter the number of guests"
-            min="2"
-            max="20"
+            min={guestMin}
+            max={guestMax}
             id="guests"
-            value={guest}
-            onChange={(e) => {
-              console.log("＼(^o^)／", e.target.value);
-              setGuest(Number(e.target.value));
-            }}
+            value={guest.value}
+            onChange={guest.setValue}
           />
+          <InputErrorMessage text={guest.error} />
         </Fieldset>
 
         <Fieldset legend="Occasion">

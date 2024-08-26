@@ -41,14 +41,9 @@
   border-radius: 50%;
 }
 
-.form-time-filter-option.active,
-.form-time-option.active {
+.active {
   pointer-events: none;
   text-decoration: none;
-}
-
-.active:hover {
-  background: var(--color-brand-primary);
 }
 
 .form-occasion-options {

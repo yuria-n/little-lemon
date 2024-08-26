@@ -1,11 +1,11 @@
 import clsx from "clsx";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback } from "react";
 
 import { Section } from "../../Section";
 import { Button } from "../../Button";
+import { useInput } from "../../../hooks";
 
 import "./Reservations.css";
-import { useInput } from "../../../hooks";
 
 const timeFilters = [
   { id: "lunch", label: "Lunch" },
@@ -58,7 +58,6 @@ function handleTargetValue(e) {
 }
 
 function handleTargetDataset(e, value = "id") {
-  console.log(e.target.dataset[value]);
   return e.target.dataset[value];
 }
 
@@ -98,9 +97,8 @@ export function Reservations() {
   const timeFilter = useInput(timeFilters[0].id, handleTargetDataset);
   const time = useInput("", handleTargetDataset, validateTime);
   const guest = useInput(guestMin, handleTargetValue, validateGuest);
-
-  const [occasion, setOccasion] = useState("");
-  const [note, setNote] = useState("");
+  const occasion = useInput("", handleTargetDataset);
+  const note = useInput("", handleTargetValue);
 
   const timeOptions =
     timeFilter.value === timeFilters[0].id ? lunchTimes : dinnerTimes;
@@ -139,7 +137,7 @@ export function Reservations() {
           </FormLabel>
           <div className="time-filter-options">
             {timeFilters.map(({ id, label }, index) => {
-              const active = timeFilter.value === id;
+              const active = id === timeFilter.value;
               return (
                 <Button
                   key={id}
@@ -157,7 +155,7 @@ export function Reservations() {
           </div>
           <ul id="reservation-time" className="form-time-options">
             {timeOptions.map((option) => {
-              const active = time.value === option;
+              const active = option === time.value;
               return (
                 <li key={option}>
                   <Button
@@ -196,7 +194,7 @@ export function Reservations() {
           <FormLabel htmlFor="occasion-option">Occasion</FormLabel>
           <ul id="occasion-option" className="form-occasion-options">
             {occasions.map(({ id, label }) => {
-              const active = id === occasion;
+              const active = id === occasion.value;
               return (
                 <li key={id}>
                   <Button
@@ -204,11 +202,7 @@ export function Reservations() {
                     variant={active ? "secondary" : "normal"}
                     aria-pressed={active}
                     data-id={id}
-                    onClick={(e) => {
-                      const { id } = e.target.dataset;
-                      console.log("＼(^o^)／", id);
-                      setOccasion((prevId) => (prevId === id ? "" : id));
-                    }}
+                    onClick={occasion.setValue}
                   >
                     {label}
                   </Button>
@@ -223,12 +217,10 @@ export function Reservations() {
             id="occasion-note"
             rows="3"
             placeholder="Add a special request (optional)"
-            value={note}
-            onChange={(e) => {
-              console.log("＼(^o^)／", e.target.value);
-              setNote(e.target.value);
-            }}
+            value={note.value}
+            onChange={note.setValue}
           />
+          <InputErrorMessage text={note.error} />
         </Fieldset>
 
         <Button variant="primary" onClick={onSubmit}>

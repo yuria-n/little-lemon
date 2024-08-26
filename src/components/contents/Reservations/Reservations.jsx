@@ -62,25 +62,27 @@ function handleTargetDataset(e, value = "id") {
   return e.target.dataset[value];
 }
 
+const today = new Date().toISOString().split("T")[0];
+function validateDate(e) {
+  if (e.target.value === "") {
+    return "Date is required.";
+  }
+  if (e.target.value <= today) {
+    return "Date cannot be in the past.";
+  }
+}
+
+function validateTime(e) {
+  if (e.target.dataset.id === "") {
+    return "Time is required.";
+  }
+}
+
 export function Reservations() {
-  const today = useMemo(() => new Date().toISOString().split("T")[0], []);
-  const validateDate = useCallback(
-    (e) => {
-      if (e.target.value === "") {
-        return "Date is required.";
-      }
-      if (e.target.value <= today) {
-        return "Date cannot be in the past.";
-      }
-      return "";
-    },
-    [today],
-  );
   const date = useInput("", handleChangeTargetValue, validateDate);
-
   const timeFilter = useInput(timeFilters[0].id, handleTargetDataset);
+  const time = useInput("", handleTargetDataset, validateTime);
 
-  const [time, setTime] = useState("");
   const [guest, setGuest] = useState(2);
   const [occasion, setOccasion] = useState("");
   const [note, setNote] = useState("");
@@ -115,11 +117,7 @@ export function Reservations() {
             onChange={date.setValue}
             onBlur={date.setValue}
           />
-          {date.error.length > 0 && (
-            <p className="text-bold form-error-message" aria-live="assertive">
-              {date.error}
-            </p>
-          )}
+          <InputErrorMessage text={date.error} />
 
           <FormLabel htmlFor="reservation-time" required>
             Time
@@ -144,7 +142,7 @@ export function Reservations() {
           </div>
           <ul id="reservation-time" className="form-time-options">
             {timeOptions.map((option) => {
-              const active = time === option;
+              const active = time.value === option;
               return (
                 <li key={option}>
                   <Button
@@ -152,10 +150,7 @@ export function Reservations() {
                     variant={active ? "secondary" : "normal"}
                     aria-pressed={active}
                     data-id={option}
-                    onClick={(e) => {
-                      console.log("＼(^o^)／", e.target.dataset.id);
-                      setTime(e.target.dataset.id);
-                    }}
+                    onClick={time.setValue}
                   >
                     {option}
                   </Button>
@@ -163,6 +158,7 @@ export function Reservations() {
               );
             })}
           </ul>
+          <InputErrorMessage text={time.error} />
         </Fieldset>
 
         <Fieldset legend="Number of guests">
@@ -245,5 +241,15 @@ function FormLabel({ className, required, children, ...props }) {
       {children}
       {required && <span className="form-label-required">*</span>}
     </label>
+  );
+}
+
+function InputErrorMessage({ text }) {
+  return (
+    text.length > 0 && (
+      <p className="text-bold form-error-message" aria-live="assertive">
+        {text}
+      </p>
+    )
   );
 }

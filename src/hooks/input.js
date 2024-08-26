@@ -1,12 +1,14 @@
 import { useCallback, useState } from "react";
 
+const defaultErrorMessage = "";
+
 export function useInput(initialValue, onChange, validate) {
   const [value, setValue] = useState(initialValue);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(defaultErrorMessage);
   const handleError = useCallback(
     (e) => {
       if (validate) {
-        setError(validate(e));
+        setError(validate(e) ?? defaultErrorMessage);
       }
     },
     [validate],

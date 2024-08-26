@@ -53,6 +53,15 @@ const occasions = [
   { id: "other", label: "Other" },
 ];
 
+function handleChangeTargetValue(e) {
+  return e.target.value;
+}
+
+function handleTargetDataset(e, value = "id") {
+  console.log(e.target.dataset[value]);
+  return e.target.dataset[value];
+}
+
 export function Reservations() {
   const today = useMemo(() => new Date().toISOString().split("T")[0], []);
   const validateDate = useCallback(
@@ -67,19 +76,17 @@ export function Reservations() {
     },
     [today],
   );
-  const changeDate = useCallback((e) => {
-    return e.target.value;
-  }, []);
-  const date = useInput("", validateDate, changeDate);
+  const date = useInput("", handleChangeTargetValue, validateDate);
 
-  const [timeFilter, setTimeFilter] = useState(timeFilters[0].id);
+  const timeFilter = useInput(timeFilters[0].id, handleTargetDataset);
+
   const [time, setTime] = useState("");
   const [guest, setGuest] = useState(2);
   const [occasion, setOccasion] = useState("");
   const [note, setNote] = useState("");
 
   const timeOptions =
-    timeFilter === timeFilters[0].id ? lunchTimes : dinnerTimes;
+    timeFilter.value === timeFilters[0].id ? lunchTimes : dinnerTimes;
 
   const onSubmit = useCallback(
     () => console.log("＼(^o^)／ Submit! Go to the next page."),
@@ -118,19 +125,17 @@ export function Reservations() {
             Time
           </FormLabel>
           <div className="time-filter-options">
-            {timeFilters.map(({ id, label }) => {
-              const active = timeFilter === id;
+            {timeFilters.map(({ id, label }, index) => {
+              const active = timeFilter.value === id;
               return (
                 <Button
                   key={id}
                   data-id={id}
+                  data-index={index}
                   className={clsx("form-time-filter-option", { active })}
                   variant={active ? "secondary" : "normal"}
                   aria-pressed={active}
-                  onClick={(e) => {
-                    console.log("＼(^o^)／", e.target.dataset.id);
-                    setTimeFilter(e.target.dataset.id);
-                  }}
+                  onClick={timeFilter.setValue}
                 >
                   {label}
                 </Button>

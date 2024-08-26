@@ -1,11 +1,13 @@
 import { useCallback, useState } from "react";
 
-export function useInput(initialValue, validate, onChange) {
+export function useInput(initialValue, onChange, validate) {
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState("");
   const handleError = useCallback(
     (e) => {
-      setError(validate(e));
+      if (validate) {
+        setError(validate(e));
+      }
     },
     [validate],
   );
@@ -17,5 +19,5 @@ export function useInput(initialValue, validate, onChange) {
     [handleError, onChange],
   );
 
-  return { value, setValue: handleChange, error, setError: handleError };
+  return { value, setValue: handleChange, error };
 }

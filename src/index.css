@@ -80,6 +80,7 @@ textarea {
   --color-brand-ternary-bg: #fbdabb;
   --color-brand-quaternary-bg: #cfe7e3;
   --color-brand-white: #ffffff;
+  --color-brand-disabled: #969c9c;
   --color-text-primary: #2a3333;
   --color-text-primary-dark: var(--color-brand-secondary);
   --color-text-secondary: #4a5050;

@@ -81,13 +81,13 @@ const guestMin = 2;
 const guestMax = 20;
 function validateGuest(e) {
   const value = Number(e.target.value);
-  if (value < 0 || !Number.isSafeInteger(value)) {
+  if (value <= 0 || !Number.isSafeInteger(value)) {
     return "Invalid number of guests. It must be a positive integer.";
   }
-  if (value < guestMin) {
+  if (value <= guestMin) {
     return "The minimum number of guests is 2.";
   }
-  if (value > guestMax) {
+  if (value >= guestMax) {
     return "The maximum number of guests is 20.";
   }
 }
@@ -102,11 +102,34 @@ export function Reservations() {
 
   const timeOptions =
     timeFilter.value === timeFilters[0].id ? lunchTimes : dinnerTimes;
+  const validated =
+    date.value.length > 0 &&
+    date.error.length === 0 &&
+    time.value.length > 0 &&
+    time.error.length === 0 &&
+    Number(guest.value) >= guestMin &&
+    Number(guest.value) <= guestMax &&
+    guest.error.length === 0;
 
-  const onSubmit = useCallback(
-    () => console.log("＼(^o^)／ Submit! Go to the next page."),
-    [],
-  );
+  const handleSubmit = useCallback(() => {
+    console.log(
+      { validated },
+      date.value,
+      time.value,
+      guest.value,
+      occasion.value,
+      note.value,
+    );
+
+    console.log("＼(^o^)／ Submit! Go to the next page.");
+  }, [
+    validated,
+    date.value,
+    time.value,
+    guest.value,
+    occasion.value,
+    note.value,
+  ]);
 
   return (
     <Section title="Reserve a table">
@@ -223,7 +246,7 @@ export function Reservations() {
           <InputErrorMessage text={note.error} />
         </Fieldset>
 
-        <Button variant="primary" onClick={onSubmit}>
+        <Button variant="primary" disabled={!validated} onClick={handleSubmit}>
           Make your reservation
         </Button>
       </form>

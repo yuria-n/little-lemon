@@ -21,5 +21,5 @@ export function useInput(initialValue, onChange, validate) {
     [handleError, onChange],
   );
 
-  return { value, setValue: handleChange, error };
+  return { value, setValue: handleChange, error, setError: handleError };
 }

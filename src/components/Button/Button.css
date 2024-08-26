@@ -31,3 +31,10 @@
 .button-link.secondary:hover {
   background: #617f75;
 }
+
+.button-link[disabled] {
+  color: var(--color-brand-white);
+  background: var(--color-brand-disabled);
+  cursor: none;
+  pointer-events: none;
+}

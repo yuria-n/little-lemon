@@ -8,10 +8,6 @@ jest.mock("./Nav", () => ({
   Nav: () => <MockComponent data-testid="mock-nav" />,
 }));
 
-jest.mock("wouter", () => ({
-  Link: ({ children, to }) => <a href={to}>{children}</a>,
-}));
-
 describe("Header Component", () => {
   test("renders header", () => {
     render(<Header />);

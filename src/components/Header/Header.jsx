@@ -9,7 +9,7 @@ import "./Header.css";
 
 export function Header() {
   return (
-    <header className="header-container">
+    <header className="header-container" data-test-id="header">
       <div className="header-content">
         <Link to={routePath.home}>
           <img alt="Go to home" height={48} src={logo} />

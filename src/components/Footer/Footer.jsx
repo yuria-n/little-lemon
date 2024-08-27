@@ -12,7 +12,7 @@ import "./Footer.css";
 
 export function Footer() {
   return (
-    <footer className="footer-container">
+    <footer className="footer-container" data-test-id="footer">
       <div className="footer-content">
         <div>
           <div className="contact-info">

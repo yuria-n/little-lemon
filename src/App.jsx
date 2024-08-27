@@ -26,7 +26,6 @@ export function App() {
   return (
     <>
       <Header />
-
       <main>
         <Switch>
           {links.map(([text, path]) => (
@@ -35,7 +34,6 @@ export function App() {
           <Route component={NotFound} />
         </Switch>
       </main>
-
       <Footer />
     </>
   );

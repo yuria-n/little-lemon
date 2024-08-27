@@ -1,19 +1,16 @@
 import { render, screen } from "@testing-library/react";
 
+import { MockComponent } from "./setupTests";
 import { App } from "./App";
 
-function MockComponent({ id }) {
-  return <div data-testid={id} />;
-}
-
 jest.mock("./components/Header", () => ({
-  Header: () => <MockComponent id="mock-header" />,
+  Header: () => <MockComponent data-testid="mock-header" />,
 }));
 jest.mock("./components/Footer", () => ({
-  Footer: () => <MockComponent id="mock-footer" />,
+  Footer: () => <MockComponent data-testid="mock-footer" />,
 }));
 jest.mock("./components/contents/Home", () => ({
-  Home: () => <MockComponent id="mock-content-home" />,
+  Home: () => <MockComponent data-testid="mock-content-home" />,
 }));
 
 describe("App Component", () => {

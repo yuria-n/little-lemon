@@ -13,3 +13,14 @@ export const links = [
   ["Reservations", routePath.reservation],
   ["Order Online", routePath.order],
 ];
+
+export const variantMap = {
+  primary: "primary",
+  secondary: "secondary",
+  normal: "",
+};
+
+export const sizeMap = {
+  sm: "sm",
+  md: "",
+};

@@ -8,7 +8,6 @@ export function useTime() {
   const getTimes = useCallback((date, type) => {
     fetchAPI(date, type)
       .then((res) => {
-        console.log("＼(^o^)／ res:", date, type, res);
         setTimes(res);
       })
       .catch(console.error);

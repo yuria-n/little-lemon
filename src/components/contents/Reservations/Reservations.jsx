@@ -2,13 +2,14 @@ import clsx from "clsx";
 import { useCallback, useEffect } from "react";
 
 import { Section } from "../../Section";
-import { Button } from "../../Button";
-import { useInput, useTime } from "../../../hooks";
+import { Button, ButtonLink } from "../../Button";
+import { useInput, useSubmit, useTime } from "../../../hooks";
 import { Fieldset } from "./Fieldset";
 import { FormLabel } from "./FormLabel";
 import { InputErrorMessage } from "./InputErrorMessage";
 
 import "./Reservations.css";
+import { routePath } from "../../../constants";
 
 const timeFilters = [
   { id: "lunch", label: "Lunch" },
@@ -63,6 +64,7 @@ function validateGuest(e) {
 
 export function Reservations() {
   const [timeOptions, getTimes] = useTime();
+  const [success, onSubmit] = useSubmit();
 
   const date = useInput("", handleTargetValue, validateDate);
   const timeFilter = useInput(timeFilters[0].id, handleTargetDataset);
@@ -81,17 +83,19 @@ export function Reservations() {
     guest.error.length === 0;
 
   const handleSubmit = useCallback(() => {
-    console.log(
-      { validated },
-      date.value,
-      time.value,
-      guest.value,
-      occasion.value,
-      note.value,
-    );
-
-    console.log("＼(^o^)／ Submit! Go to the next page.");
+    if (!validated) {
+      return;
+    }
+    const params = {
+      date: date.value,
+      time: time.value,
+      guest: guest.value,
+      occasion: occasion.value,
+      note: note.value,
+    };
+    onSubmit(params);
   }, [
+    onSubmit,
     validated,
     date.value,
     time.value,
@@ -109,128 +113,147 @@ export function Reservations() {
 
   return (
     <Section title="Reserve a table">
-      <form className="reservation-form">
-        <Fieldset legend="Date & Time">
-          <FormLabel
-            htmlFor="reservation-date"
-            required
-            className={clsx({ "form-error-label": date.error.length > 0 })}
-          >
-            Date
-          </FormLabel>
-          <input
-            className={clsx({ "form-error-input": date.error.length > 0 })}
-            id="reservation-date"
-            type="date"
-            required
-            autoFocus
-            min={today}
-            value={date.value}
-            onChange={date.setValue}
-            onBlur={date.setValue}
-          />
-          <InputErrorMessage text={date.error} />
+      {success ? (
+        <>
+          <h2>Thank You! Your Reservation is Confirmed.</h2>
+          <p>
+            We look forward to seeing you on{" "}
+            {new Date(date.value).toLocaleDateString()} at {time.value}!
+          </p>
+          <p>
+            We're excited to host you at Little Lemon Chicago. A confirmation
+            email has been sent to you. If you need to make any changes, please
+            contact us.
+          </p>
+        </>
+      ) : (
+        <form className="reservation-form">
+          <Fieldset legend="Date & Time">
+            <FormLabel
+              htmlFor="reservation-date"
+              required
+              className={clsx({ "form-error-label": date.error.length > 0 })}
+            >
+              Date
+            </FormLabel>
+            <input
+              className={clsx({ "form-error-input": date.error.length > 0 })}
+              id="reservation-date"
+              type="date"
+              required
+              autoFocus
+              min={today}
+              value={date.value}
+              onChange={date.setValue}
+              onBlur={date.setValue}
+            />
+            <InputErrorMessage text={date.error} />
 
-          <FormLabel htmlFor="reservation-time" required>
-            Time
-          </FormLabel>
-          <div className="time-filter-options">
-            {timeFilters.map(({ id, label }, index) => {
-              const active = id === timeFilter.value;
-              return (
-                <Button
-                  key={id}
-                  data-id={id}
-                  data-index={index}
-                  className={clsx("form-time-filter-option", { active })}
-                  variant={active ? "secondary" : "normal"}
-                  aria-pressed={active}
-                  onClick={timeFilter.setValue}
-                >
-                  {label}
-                </Button>
-              );
-            })}
-          </div>
-          <ul id="reservation-time" className="form-time-options">
-            {timeOptions?.map((option) => {
-              const active = option === time.value;
-              return (
-                <li key={option}>
+            <FormLabel htmlFor="reservation-time" required>
+              Time
+            </FormLabel>
+            <div className="time-filter-options">
+              {timeFilters.map(({ id, label }, index) => {
+                const active = id === timeFilter.value;
+                return (
                   <Button
-                    className={clsx("form-time-option", { active })}
-                    variant={active ? "secondary" : "normal"}
-                    aria-pressed={active}
-                    data-id={option}
-                    onClick={time.setValue}
-                  >
-                    {option}
-                  </Button>
-                </li>
-              );
-            })}
-            {!timeOptions && (
-              <p className="text-sm">
-                Please select date to see the available time options.
-              </p>
-            )}
-          </ul>
-          <InputErrorMessage text={time.error} />
-        </Fieldset>
-
-        <Fieldset legend="Number of guests">
-          <FormLabel htmlFor="guests" required>
-            Guests
-          </FormLabel>
-          <input
-            type="number"
-            placeholder="Enter the number of guests"
-            min={guestMin}
-            max={guestMax}
-            id="guests"
-            value={guest.value}
-            onChange={guest.setValue}
-          />
-          <InputErrorMessage text={guest.error} />
-        </Fieldset>
-
-        <Fieldset legend="Occasion">
-          <FormLabel htmlFor="occasion-option">Occasion</FormLabel>
-          <ul id="occasion-option" className="form-occasion-options">
-            {occasions.map(({ id, label }) => {
-              const active = id === occasion.value;
-              return (
-                <li key={id}>
-                  <Button
-                    className={clsx("form-occasion-option", { active })}
-                    variant={active ? "secondary" : "normal"}
-                    aria-pressed={active}
+                    key={id}
                     data-id={id}
-                    onClick={occasion.setValue}
+                    data-index={index}
+                    className={clsx("form-time-filter-option", { active })}
+                    variant={active ? "secondary" : "normal"}
+                    aria-pressed={active}
+                    onClick={timeFilter.setValue}
                   >
                     {label}
                   </Button>
-                </li>
-              );
-            })}
-          </ul>
+                );
+              })}
+            </div>
+            <ul id="reservation-time" className="form-time-options">
+              {timeOptions?.map((option) => {
+                const active = option === time.value;
+                return (
+                  <li key={option}>
+                    <Button
+                      className={clsx("form-time-option", { active })}
+                      variant={active ? "secondary" : "normal"}
+                      aria-pressed={active}
+                      data-id={option}
+                      onClick={time.setValue}
+                    >
+                      {option}
+                    </Button>
+                  </li>
+                );
+              })}
+              {!timeOptions && (
+                <p className="text-sm">
+                  Please select date to see the available time options.
+                </p>
+              )}
+            </ul>
+            <InputErrorMessage text={time.error} />
+          </Fieldset>
 
-          <FormLabel htmlFor="occasion-note">Notes</FormLabel>
-          <textarea
-            className="form-textarea"
-            id="occasion-note"
-            rows="3"
-            placeholder="Add a special request (optional)"
-            value={note.value}
-            onChange={note.setValue}
-          />
-          <InputErrorMessage text={note.error} />
-        </Fieldset>
+          <Fieldset legend="Number of guests">
+            <FormLabel htmlFor="guests" required>
+              Guests
+            </FormLabel>
+            <input
+              type="number"
+              placeholder="Enter the number of guests"
+              min={guestMin}
+              max={guestMax}
+              id="guests"
+              value={guest.value}
+              onChange={guest.setValue}
+            />
+            <InputErrorMessage text={guest.error} />
+          </Fieldset>
 
-        <Button variant="primary" disabled={!validated} onClick={handleSubmit}>
-          Make your reservation
-        </Button>
-      </form>
+          <Fieldset legend="Occasion">
+            <FormLabel htmlFor="occasion-option">Occasion</FormLabel>
+            <ul id="occasion-option" className="form-occasion-options">
+              {occasions.map(({ id, label }) => {
+                const active = id === occasion.value;
+                return (
+                  <li key={id}>
+                    <Button
+                      className={clsx("form-occasion-option", { active })}
+                      variant={active ? "secondary" : "normal"}
+                      aria-pressed={active}
+                      data-id={id}
+                      onClick={occasion.setValue}
+                    >
+                      {label}
+                    </Button>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <FormLabel htmlFor="occasion-note">Notes</FormLabel>
+            <textarea
+              className="form-textarea"
+              id="occasion-note"
+              rows="3"
+              placeholder="Add a special request (optional)"
+              value={note.value}
+              onChange={note.setValue}
+            />
+            <InputErrorMessage text={note.error} />
+          </Fieldset>
+
+          <Button
+            variant="primary"
+            disabled={!validated}
+            onClick={handleSubmit}
+          >
+            Make your reservation
+          </Button>
+        </form>
+      )}
     </Section>
   );
 }

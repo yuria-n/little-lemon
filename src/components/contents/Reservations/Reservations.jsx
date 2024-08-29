@@ -1,9 +1,9 @@
 import clsx from "clsx";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 import { Section } from "../../Section";
 import { Button } from "../../Button";
-import { useInput } from "../../../hooks";
+import { useInput, useTime } from "../../../hooks";
 import { Fieldset } from "./Fieldset";
 import { FormLabel } from "./FormLabel";
 import { InputErrorMessage } from "./InputErrorMessage";
@@ -13,40 +13,6 @@ import "./Reservations.css";
 const timeFilters = [
   { id: "lunch", label: "Lunch" },
   { id: "dinner", label: "Dinner" },
-];
-
-const lunchTimes = [
-  "11:00",
-  "11:15",
-  "11:30",
-  "11:45",
-  "12:00",
-  "12:15",
-  "12:30",
-  "12:45",
-  "13:00",
-  "13:15",
-  "13:30",
-  "13:45",
-];
-
-const dinnerTimes = [
-  "17:00",
-  "17:15",
-  "17:30",
-  "17:45",
-  "18:00",
-  "18:15",
-  "18:30",
-  "18:45",
-  "19:00",
-  "19:15",
-  "19:30",
-  "19:45",
-  "20:00",
-  "20:15",
-  "20:30",
-  "20:45",
 ];
 
 const occasions = [
@@ -96,6 +62,8 @@ function validateGuest(e) {
 }
 
 export function Reservations() {
+  const [timeOptions, getTimes] = useTime();
+
   const date = useInput("", handleTargetValue, validateDate);
   const timeFilter = useInput(timeFilters[0].id, handleTargetDataset);
   const time = useInput("", handleTargetDataset, validateTime);
@@ -103,8 +71,6 @@ export function Reservations() {
   const occasion = useInput("", handleTargetDataset);
   const note = useInput("", handleTargetValue);
 
-  const timeOptions =
-    timeFilter.value === timeFilters[0].id ? lunchTimes : dinnerTimes;
   const validated =
     date.value.length > 0 &&
     date.error.length === 0 &&
@@ -133,6 +99,13 @@ export function Reservations() {
     occasion.value,
     note.value,
   ]);
+
+  useEffect(() => {
+    if (!date.value) {
+      return;
+    }
+    getTimes(new Date(date.value), timeFilter.value);
+  }, [getTimes, date.value, timeFilter.value]);
 
   return (
     <Section title="Reserve a table">
@@ -180,7 +153,7 @@ export function Reservations() {
             })}
           </div>
           <ul id="reservation-time" className="form-time-options">
-            {timeOptions.map((option) => {
+            {timeOptions?.map((option) => {
               const active = option === time.value;
               return (
                 <li key={option}>
@@ -196,6 +169,11 @@ export function Reservations() {
                 </li>
               );
             })}
+            {!timeOptions && (
+              <p className="text-sm">
+                Please select date to see the available time options.
+              </p>
+            )}
           </ul>
           <InputErrorMessage text={time.error} />
         </Fieldset>

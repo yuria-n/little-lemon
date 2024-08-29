@@ -1,7 +1,7 @@
 function seededRandom(seed) {
   const m = 2 ** 35 - 31;
   const a = 185852;
-  const s = seed % m;
+  let s = seed % m;
   return function () {
     return (s = (s * a) % m) / m;
   };

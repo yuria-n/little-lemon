@@ -21,7 +21,11 @@ export function Nav() {
 function NavItem({ className, to, text, selected }) {
   return (
     <li data-testid="nav-item">
-      <ButtonLink className={clsx("nav-item", { selected })} to={to}>
+      <ButtonLink
+        className={clsx("nav-item", { selected })}
+        to={to}
+        aria-current={selected}
+      >
         {text}
       </ButtonLink>
     </li>

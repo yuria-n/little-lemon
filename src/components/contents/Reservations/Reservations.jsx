@@ -4,6 +4,9 @@ import { useCallback } from "react";
 import { Section } from "../../Section";
 import { Button } from "../../Button";
 import { useInput } from "../../../hooks";
+import { Fieldset } from "./Fieldset";
+import { FormLabel } from "./FormLabel";
+import { InputErrorMessage } from "./InputErrorMessage";
 
 import "./Reservations.css";
 
@@ -251,33 +254,5 @@ export function Reservations() {
         </Button>
       </form>
     </Section>
-  );
-}
-
-function Fieldset({ legend, className, children }) {
-  return (
-    <fieldset className={clsx("form-fieldset", className)}>
-      <legend className="text-lg text-bold form-legend">{legend}</legend>
-      {children}
-    </fieldset>
-  );
-}
-
-function FormLabel({ className, required, children, ...props }) {
-  return (
-    <label className={clsx("text-bold", "form-label", className)} {...props}>
-      {children}
-      {required && <span className="form-label-required">*</span>}
-    </label>
-  );
-}
-
-function InputErrorMessage({ text }) {
-  return (
-    text.length > 0 && (
-      <p className="text-bold form-error-message" aria-live="assertive">
-        {text}
-      </p>
-    )
   );
 }
